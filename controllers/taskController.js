@@ -41,7 +41,8 @@ exports.createTask = [
           nombre: req.body.nombre,
           prioridad: req.body.prioridad,
           fecha: new Date(req.body.fecha),
-          autor: req.body.autor
+          autor: req.body.autor,
+          completed: false
         }
         var createTarea = new Task(objectTask);
         Task.findOne({nombre : req.body.nombre}).then( (task) => {
@@ -82,6 +83,7 @@ exports.updateTask = [
           nombre: req.body.nombre,
           prioridad: req.body.prioridad,
           fecha: new Date(req.body.fecha),
+          completed: req.body.completed
         }
           if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
             return req.send("Invalid IDE")
@@ -140,29 +142,17 @@ exports.deleteTask = [
  * @param {*} params 
  * @param {*} body 
  */
-function validateParamsDeleteTask(params, body) {
+function validateParamsDeleteTask(params) {
   if (!params) {
     return {
       error: true,
       message: 'No request params',
       status: 404
     }
-  } else if (!body) {
-    return {
-      error: true,
-      message: 'No request body',
-      status: 404
-    }
   } else if (!params.id || params.id === "") {
     return {
       error: true,
       message: 'ID no valido para eliminación',
-      status: 404
-    }
-  } else if (!body.autor || body.autor === "") {
-    return {
-      error: true,
-      message: 'Autor no valido para eliminación',
       status: 404
     }
   }

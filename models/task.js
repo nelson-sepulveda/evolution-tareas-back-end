@@ -4,7 +4,8 @@ var taskSchema = new Schema({
 	autor: { type: Schema.ObjectId, ref: "Autor" },
 	nombre: { type: String },
 	prioridad: { type: Number },
-	fecha: { type: Date }
+	fecha: { type: Date },
+	completed: { type: Boolean }
 });
 
 
